@@ -218,8 +218,8 @@ def pregunta_10():
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
     c = tbl0.groupby(['_c1'])['_c2'].apply(list).reset_index()
-    c['_c2'] = df['_c2'].apply(lambda x: sorted(x))
-    c['_c2'] = df['_c2'].apply(lambda x: ':'.join(str(e) for e in x) )
+    c['_c2'] = c['_c2'].apply(lambda x: sorted(x))
+    c['_c2'] = c['_c2'].apply(lambda x: ':'.join(str(e) for e in x) )
     c.set_index("_c1", inplace = True)
     
     return c
@@ -242,8 +242,8 @@ def pregunta_11():
     39   39    a,d,f
     """
     c = tbl1.groupby('_c0')['_c4'].apply(list).reset_index()
-    c['_c4'] = df['_c4'].apply(lambda x: sorted(x))
-    c['_c4'] = df['_c4'].apply(lambda x: ','.join(str(e) for e in x))
+    c['_c4'] = c['_c4'].apply(lambda x: sorted(x))
+    c['_c4'] = c['_c4'].apply(lambda x: ','.join(str(e) for e in x))
     return c
 
 
@@ -265,8 +265,8 @@ def pregunta_12():
     tbl2['_c5b'] = tbl2['_c5b'].astype(str)
     tbl2['_c5'] = tbl2[['_c5a', '_c5b']].agg(':'.join, axis=1)
     c = tbl2.groupby('_c0')['_c5'].apply(list).reset_index()
-    c['_c5'] = df['_c5'].apply(lambda x: sorted(x))
-    c['_c5'] = [','.join(map(str, l)) for l in df['_c5']]
+    c['_c5'] = c['_c5'].apply(lambda x: sorted(x))
+    c['_c5'] = [','.join(map(str, l)) for l in c['_c5']]
 
     return c
 
