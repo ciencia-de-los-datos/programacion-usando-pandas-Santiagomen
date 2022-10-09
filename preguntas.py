@@ -65,7 +65,8 @@ def pregunta_03():
     tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
     tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
     
-    return tbl0['_c1'].value_counts()
+    c = tbl0['_c1'].value_counts()
+    return c 
 
 
 def pregunta_04():
@@ -80,7 +81,12 @@ def pregunta_04():
     E    4.785714
     Name: _c2, dtype: float64
     """
-    return
+    import pandas as pd
+    tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
+    tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
+    tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
+    c = tbl0.groupby('_c1')['_c2'].mean()
+    return c
 
 
 def pregunta_05():
@@ -97,7 +103,13 @@ def pregunta_05():
     E    9
     Name: _c2, dtype: int64
     """
-    return
+    tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
+    tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
+    tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
+    
+    c = tbl0.groupby('_c1')['_c2'].max()
+    
+    return c
 
 
 def pregunta_06():
@@ -109,7 +121,14 @@ def pregunta_06():
     ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
     """
-    return
+    tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
+    tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
+    tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
+    
+    a = sorted(tbl1['_c4'].unique())
+    lst = [x.upper() for x in a]
+
+    return lst
 
 
 def pregunta_07():
@@ -125,7 +144,12 @@ def pregunta_07():
     E    67
     Name: _c2, dtype: int64
     """
-    return
+    tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
+    tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
+    tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
+    
+    c = tbl0.groupby('_c1')['_c2'].sum()
+    return c
 
 
 def pregunta_08():
@@ -143,7 +167,14 @@ def pregunta_08():
     39   39   E    5  1998-01-26    44
 
     """
-    return
+    tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
+    tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
+    tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
+    
+    suma = tbl0['_c0']+tbl0['_c2']
+    tbl0['suma'] = _c0_c2
+    
+    return tbl0
 
 
 def pregunta_09():
@@ -161,7 +192,15 @@ def pregunta_09():
     39   39   E    5  1998-01-26  1998
 
     """
-    return
+    tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
+    tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
+    tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
+    
+    tbl0[['year','month','day']] = tbl0['_c3'].str.split('-',expand = True)
+    del(tbl0['month'])
+    del(tbl0['day'])
+    
+    return tbl0
 
 
 def pregunta_10():
