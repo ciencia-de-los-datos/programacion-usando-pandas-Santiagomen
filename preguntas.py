@@ -22,7 +22,12 @@ def pregunta_01():
     40
 
     """
-    return
+    import pandas as pd
+    tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
+    tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
+    tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
+    
+    return len(tbl0)
 
 
 def pregunta_02():
@@ -33,7 +38,12 @@ def pregunta_02():
     4
 
     """
-    return
+    import pandas as pd
+    tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
+    tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
+    tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
+    
+    return len(tbl0.columns)
 
 
 def pregunta_03():
@@ -50,7 +60,13 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    return
+    import pandas as pd
+    tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
+    tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
+    tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
+    
+    c = tbl0['_c1'].value_counts().sort_index()
+    return c 
 
 
 def pregunta_04():
@@ -65,7 +81,12 @@ def pregunta_04():
     E    4.785714
     Name: _c2, dtype: float64
     """
-    return
+    import pandas as pd
+    tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
+    tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
+    tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
+    c = tbl0.groupby('_c1')['_c2'].mean()
+    return c
 
 
 def pregunta_05():
@@ -82,7 +103,13 @@ def pregunta_05():
     E    9
     Name: _c2, dtype: int64
     """
-    return
+    tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
+    tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
+    tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
+    
+    c = tbl0.groupby('_c1')['_c2'].max()
+    
+    return c
 
 
 def pregunta_06():
@@ -94,7 +121,14 @@ def pregunta_06():
     ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
     """
-    return
+    tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
+    tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
+    tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
+    
+    a = sorted(tbl1['_c4'].unique())
+    lst = [x.upper() for x in a]
+
+    return lst
 
 
 def pregunta_07():
@@ -110,7 +144,12 @@ def pregunta_07():
     E    67
     Name: _c2, dtype: int64
     """
-    return
+    tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
+    tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
+    tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
+    
+    c = tbl0.groupby('_c1')['_c2'].sum()
+    return c
 
 
 def pregunta_08():
@@ -128,7 +167,14 @@ def pregunta_08():
     39   39   E    5  1998-01-26    44
 
     """
-    return
+    tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
+    tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
+    tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
+    
+    suma = tbl0['_c0']+tbl0['_c2']
+    tbl0['suma'] = suma
+    
+    return tbl0
 
 
 def pregunta_09():
@@ -146,7 +192,15 @@ def pregunta_09():
     39   39   E    5  1998-01-26  1998
 
     """
-    return
+    tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
+    tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
+    tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
+    
+    tbl0[['year','month','day']] = tbl0['_c3'].str.split('-',expand = True)
+    del(tbl0['month'])
+    del(tbl0['day'])
+    
+    return tbl0
 
 
 def pregunta_10():
@@ -163,7 +217,12 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    return
+    c = tbl0.groupby(['_c1'])['_c2'].apply(list).reset_index()
+    c['_c2'] = c['_c2'].apply(lambda x: sorted(x))
+    c['_c2'] = c['_c2'].apply(lambda x: ':'.join(str(e) for e in x) )
+    c.set_index("_c1", inplace = True)
+    
+    return c
 
 
 def pregunta_11():
@@ -182,7 +241,10 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    return
+    c = tbl1.groupby('_c0')['_c4'].apply(list).reset_index()
+    c['_c4'] = c['_c4'].apply(lambda x: sorted(x))
+    c['_c4'] = c['_c4'].apply(lambda x: ','.join(str(e) for e in x))
+    return c
 
 
 def pregunta_12():
@@ -200,7 +262,13 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    return
+    tbl2['_c5b'] = tbl2['_c5b'].astype(str)
+    tbl2['_c5'] = tbl2[['_c5a', '_c5b']].agg(':'.join, axis=1)
+    c = tbl2.groupby('_c0')['_c5'].apply(list).reset_index()
+    c['_c5'] = c['_c5'].apply(lambda x: sorted(x))
+    c['_c5'] = [','.join(map(str, l)) for l in c['_c5']]
+
+    return c
 
 
 def pregunta_13():
@@ -217,4 +285,6 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    return
+    newtbl = pd.merge(tbl0, tbl2)
+    c = newtbl.groupby('_c1')['_c5b'].sum('_c5b')
+    return c
