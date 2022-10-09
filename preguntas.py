@@ -65,7 +65,7 @@ def pregunta_03():
     tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
     tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
     
-    c = tbl0['_c1'].value_counts()
+    c = tbl0['_c1'].value_counts().sort_index()
     return c 
 
 
@@ -172,7 +172,7 @@ def pregunta_08():
     tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
     
     suma = tbl0['_c0']+tbl0['_c2']
-    tbl0['suma'] = _c0_c2
+    tbl0['suma'] = suma
     
     return tbl0
 
